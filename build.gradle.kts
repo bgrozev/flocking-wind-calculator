@@ -28,6 +28,7 @@ dependencies {
     implementation(npm("react", "17.0.2"))
     implementation(npm("react-dom", "17.0.2"))
 
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
     //Kotlin React CSS (chapter 3)
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react-css:17.0.2-pre.298-kotlin-1.6.10")
 
