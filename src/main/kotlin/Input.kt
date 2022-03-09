@@ -5,6 +5,8 @@ import react.Props
 import react.dom.html.InputType
 import react.dom.html.ReactHTML
 import react.dom.html.ReactHTML.button
+import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.input
 import react.dom.html.ReactHTML.p
 import react.key
 
@@ -26,39 +28,83 @@ external interface InputContainerProps : Props {
 }
 
 val InputContainer = FC<InputContainerProps> { props ->
-    DoubleInputField {
-        name = "Start Altitude (kft)"
-        value = props.input.startAltitude
-        onChange = {
-            props.onInputChanged(
-                Input(
-                    it,
-                    props.input.endAltitude,
-                    props.input.descentRateMph,
-                    props.input.horizontalSpeedMph,
-                    props.input.jumprunDirection
+    div {
+        +"Altitude from "
+        input {
+            type = InputType.number
+            key = "start-altitude"
+            value = props.input.startAltitude.toString()
+            onChange = {
+                console.log("Start altitude changed to ${it.target.value}")
+                props.onInputChanged(
+                    Input(
+                        it.target.value.toDouble(),
+                        props.input.endAltitude,
+                        props.input.descentRateMph,
+                        props.input.horizontalSpeedMph,
+                        props.input.jumprunDirection
+                    )
                 )
-            )
+            }
         }
+        +" kft down to "
+        input {
+            type = InputType.number
+            key = "end-altitude"
+            value = props.input.endAltitude.toString()
+            onChange = {
+                console.log("End altitude changed to ${it.target.value}")
+                props.onInputChanged(
+                    Input(
+                        props.input.startAltitude,
+                        it.target.value.toDouble(),
+                        props.input.descentRateMph,
+                        props.input.horizontalSpeedMph,
+                        props.input.jumprunDirection
+                    )
+                )
+            }
+        }
+        + "kft."
     }
 
-    DoubleInputField {
-        name = "End Altitude (kft)"
-        value = props.input.endAltitude
+    +"Descent rate "
+    input {
+        type = InputType.number
+        key = "descent-rate"
+        value = props.input.descentRateMph.toString()
         onChange = {
+            console.log("descent rate changed to ${it.target.value}")
             props.onInputChanged(
                 Input(
                     props.input.startAltitude,
-                    it,
-                    props.input.descentRateMph,
+                    props.input.endAltitude,
+                    it.target.value.toDouble(),
                     props.input.horizontalSpeedMph,
                     props.input.jumprunDirection
                 )
             )
         }
     }
-
-    p { }
+    +" mph, horizontal speed "
+    input {
+        type = InputType.number
+        key = "horizontal-speed"
+        value = props.input.horizontalSpeedMph.toString()
+        onChange = {
+            console.log("horizontal speed changed to ${it.target.value}")
+            props.onInputChanged(
+                Input(
+                    props.input.startAltitude,
+                    props.input.endAltitude,
+                    props.input.descentRateMph,
+                    it.target.value.toDouble(),
+                    props.input.jumprunDirection
+                )
+            )
+        }
+    }
+    +" mph. "
     button {
         +"Flow"
         onClick = {
@@ -87,38 +133,7 @@ val InputContainer = FC<InputContainerProps> { props ->
             )
         }
     }
-    DoubleInputField {
-        name = "Descent Rate (mph)"
-        value = props.input.descentRateMph
-        onChange = {
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    it,
-                    props.input.horizontalSpeedMph,
-                    props.input.jumprunDirection
-                )
-            )
-        }
-    }
-    DoubleInputField {
-        name = "Horizontal speed (mph)"
-        value = props.input.horizontalSpeedMph
-        onChange = {
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    props.input.descentRateMph,
-                    it,
-                    props.input.jumprunDirection
-                )
-            )
-        }
-    }
 
-    p {}
     DoubleInputField {
         name = "Jumprun "
         value = props.input.jumprunDirection

@@ -13,7 +13,7 @@ fun main() {
 
 val App = FC<Props> {
     h1 {
-        +"Hello"
+        +"Flocking Wind Drift Calculator"
     }
 
     var inputState: Input by useState(Input.INITIAL)
