@@ -7,7 +7,7 @@ import react.dom.html.ReactHTML.h1
 import react.dom.html.ReactHTML.p
 
 fun main() {
-    val container = document.getElementById("root") ?: error("Couldn't find root container!")
+    val container = document.getElementById("root") ?: return
     render(App.create(), container)
 }
 
@@ -36,6 +36,7 @@ val App = FC<Props> {
         }
     }
 
+    p { }
     Drift {
         winds = getWindsAloft()
         input = inputState

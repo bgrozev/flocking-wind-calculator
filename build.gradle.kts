@@ -16,6 +16,11 @@ kotlin {
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
+            testTask {
+              useKarma() {
+                useChromeHeadless()
+              }
+            }
         }
         binaries.executable()
     }
@@ -41,6 +46,8 @@ dependencies {
     //Coroutines & serialization (chapter 8)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
+    testImplementation(kotlin("test-js"))
 }
 
 // Heroku Deployment (chapter 9)
