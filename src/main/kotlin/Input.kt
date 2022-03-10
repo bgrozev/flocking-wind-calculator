@@ -1,13 +1,15 @@
 package net.mustelinae.drift
 
+import csstype.px
 import react.FC
 import react.Props
+import react.css.css
 import react.dom.html.InputType
 import react.dom.html.ReactHTML
+import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.input
-import react.dom.html.ReactHTML.p
 import react.key
 
 data class Input(
@@ -46,6 +48,9 @@ val InputContainer = FC<InputContainerProps> { props ->
                     )
                 )
             }
+            css {
+                width = 50.px
+            }
         }
         +" kft down to "
         input {
@@ -63,6 +68,9 @@ val InputContainer = FC<InputContainerProps> { props ->
                         props.input.jumprunDirection
                     )
                 )
+            }
+            css {
+                width = 50.px
             }
         }
         + "kft."
@@ -85,6 +93,9 @@ val InputContainer = FC<InputContainerProps> { props ->
                 )
             )
         }
+        css {
+            width = 50.px
+        }
     }
     +" mph, horizontal speed "
     input {
@@ -102,6 +113,9 @@ val InputContainer = FC<InputContainerProps> { props ->
                     props.input.jumprunDirection
                 )
             )
+        }
+        css {
+            width = 50.px
         }
     }
     +" mph. "
@@ -134,19 +148,26 @@ val InputContainer = FC<InputContainerProps> { props ->
         }
     }
 
-    DoubleInputField {
-        name = "Jumprun "
-        value = props.input.jumprunDirection
+    br { }
+    +"Jumprun: "
+    input {
+        type = InputType.number
+        key = "jumprun"
+        value = props.input.jumprunDirection.toString()
         onChange = {
+            console.log("jumprun changed to ${it.target.value}")
             props.onInputChanged(
                 Input(
                     props.input.startAltitude,
                     props.input.endAltitude,
                     props.input.descentRateMph,
                     props.input.horizontalSpeedMph,
-                    it
+                    it.target.value.toDouble()
                 )
             )
+        }
+        css {
+            width = 50.px
         }
     }
 }
