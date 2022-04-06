@@ -147,9 +147,23 @@ val InputContainer = FC<InputContainerProps> { props ->
             )
         }
     }
+    button {
+        +"XRW"
+        onClick = {
+            props.onInputChanged(
+                Input(
+                    props.input.startAltitude,
+                    props.input.endAltitude,
+                    40.0,
+                    70.0,
+                    props.input.jumprunDirection
+                )
+            )
+        }
+    }
 
     br { }
-    +"Jumprun: "
+    +"Canopy flight direction: "
     input {
         type = InputType.number
         key = "jumprun"
@@ -170,6 +184,7 @@ val InputContainer = FC<InputContainerProps> { props ->
             width = 50.px
         }
     }
+    +"˚"
 }
 
 val DoubleInputField = FC<InputFieldProps<Double>> { props ->

@@ -12,17 +12,17 @@ import kotlin.math.sqrt
 
 val Drift = FC<DriftProps> { props ->
     val i = props.input
-    val windDrift = windDrift(props.winds, i.startAltitude, i.endAltitude, i.descentRateMph)
+    val windDrift = windDrift(props.winds.windsAloft, i.startAltitude, i.endAltitude, i.descentRateMph)
     val canopyDrift = canopyDrift(i.startAltitude, i.endAltitude, i.horizontalSpeedMph, i.descentRateMph, i.jumprunDirection)
     +"Wind drift: ${windDrift.toCardinalString()}"
     br { }
-    +"Canopy drift: ${canopyDrift.toCardinalString()}"
+    +"Canopy flight: ${canopyDrift.toCardinalString()}"
     br { }
     +"Combined: ${(windDrift+canopyDrift).toCardinalString()}"
 }
 
 external interface DriftProps : Props {
-    var winds: WindsAloft
+    var winds: Winds
     var input: Input
 }
 
@@ -42,7 +42,6 @@ fun windDrift(winds: WindsAloft, highAltitudeKft: Double, lowAltitudeKft: Double
     var drift = MilesVector(0.0, 0.0)
 
     var prev = lowAltitudeKft*1000
-    console.log("start prev=$prev")
     winds.altFt.filter { it >= lowAltitudeKft*1000 && it <= highAltitudeKft*1000 }.forEach {
         val deltaAltFt = (it - prev)
         val seconds = deltaAltFt / descentRateMph.mphToFps()
@@ -82,7 +81,7 @@ val MilesVector.directionRad: Double
             else -> 0.0
         }
     }
-fun MilesVector.toCardinalString(): String = "${length.format(2)} miles at ${this.cardinalDirection.toInt()}"
+fun MilesVector.toCardinalString(): String = "${length.format(2)} miles at ${this.cardinalDirection.toInt()}˚"
 fun Double.format(digits: Int): String = this.asDynamic().toFixed(digits) as String
 
 fun Double.mphToFps() = this * 5280 / 3600

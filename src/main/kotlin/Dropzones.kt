@@ -4,9 +4,11 @@ import react.FC
 import react.Props
 import react.dom.html.ReactHTML
 
+// https://markschulze.net/winds/dropzones.geojson
 val dropzones = listOf(
     Dropzone("Skydive Spaceland-Houston", 29.3569417, -95.4594028),
     Dropzone("Skydive San Marcos", 29.7682803, -97.7752789),
+    Dropzone("Chicagoland Skydiving Center", 41.8911147, -89.0802674),
     Dropzone(Dropzone.CUSTOM_NAME, 0.0, 0.0)
 )
 

@@ -10,10 +10,10 @@ import react.dom.html.ReactHTML.thead
 import react.dom.html.ReactHTML.tr
 
 external interface WindsProps : Props {
-    var winds: WindsAloft
+    var winds: Winds
 }
 
-val Winds = FC<WindsProps> { props ->
+val WindsContainer = FC<WindsProps> { props ->
     p { +"Winds: " }
     table {
         thead {
@@ -26,10 +26,10 @@ val Winds = FC<WindsProps> { props ->
         tbody {
             (0..18).forEach {
                 tr {
-                    val altitude = props.winds.altFt[it].toString()
+                    val altitude = props.winds.windsAloft.altFt[it].toString()
                     th { +altitude }
-                    th { + "${props.winds.speed[altitude]}" }
-                    th { + "${props.winds.direction[altitude]}" }
+                    th { + "${props.winds.windsAloft.speed[altitude]}" }
+                    th { + "${props.winds.windsAloft.direction[altitude]}" }
                 }
             }
         }
