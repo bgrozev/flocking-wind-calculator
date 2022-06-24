@@ -6,9 +6,13 @@ import react.dom.html.ReactHTML
 
 // https://markschulze.net/winds/dropzones.geojson
 val dropzones = listOf(
-    Dropzone("Skydive Spaceland-Houston", 29.3569417, -95.4594028),
-    Dropzone("Skydive San Marcos", 29.7682803, -97.7752789),
     Dropzone("Chicagoland Skydiving Center", 41.8911147, -89.0802674),
+    Dropzone("Skydive Paraclete XP (Raeford)", 35.01910, -79.19060),
+    Dropzone("Skydive Phoenix", 33.0531729, -112.1751402),
+    Dropzone("Skydive Spaceland Dallas", 33.4492, -96.3783),
+    Dropzone("Skydive Spaceland Houston", 29.3569417, -95.4594028),
+    Dropzone("Skydive Spaceland San Marcos", 29.7682803, -97.7752789),
+    Dropzone("Triangle Skydiving Center", 36.02599, -78.32944),
     Dropzone(Dropzone.CUSTOM_NAME, 0.0, 0.0)
 )
 
