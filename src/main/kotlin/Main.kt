@@ -1,15 +1,18 @@
 package net.mustelinae.drift
 
+import csstype.px
 import kotlinx.browser.document
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.*
+import react.css.css
+import react.dom.html.ReactHTML.a
 import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
 import react.dom.render
-import react.dom.html.ReactHTML.h1
+import react.dom.html.ReactHTML.h2
 import react.dom.html.ReactHTML.p
-import react.dom.onChange
+import react.dom.html.ReactHTML.small
 
 fun main() {
     val container = document.getElementById("root") ?: return
@@ -37,8 +40,23 @@ fun subscribeToWinds(f: (Winds?) -> Unit) {
 var getDropzone: () -> Pair<Dropzone, Int>? = { null }
 
 val App = FC<Props> {
-    h1 {
+    h2 {
         +"Flocking Wind Calculator"
+        css {
+            marginBottom = 0.px
+        }
+    }
+    p {
+        small {
+            +"Powered by "
+            a {
+                href = "https://www.markschulze.net/winds/"
+                +"Winds Aloft by Mark Schulze"
+            }
+        }
+        css {
+            marginTop = 0.px
+        }
     }
 
     var inputState: Input by useState(Input.fromLocalStorage())
@@ -107,6 +125,10 @@ val App = FC<Props> {
         if (showWinds) {
             WindsContainer { winds = w }
         }
+    }
+
+    p {
+        small { +"For questions or feedback email boris at mustelinae.net" }
     }
     // Map { }
 }
