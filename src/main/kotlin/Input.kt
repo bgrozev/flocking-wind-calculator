@@ -20,7 +20,23 @@ data class Input(
     val jumprunDirection: Double
 ) {
     companion object {
-        val INITIAL = Input(12.0, 4.0, 21.0, 50.0, 180.0)
+        val DEFAULT = Input(12.0, 4.0, 21.0, 50.0, 180.0)
+
+        fun fromLocalStorage() = Input(
+            startAltitude = LocalStorage.startAltitude,
+            endAltitude = LocalStorage.endAltitude,
+            descentRateMph = LocalStorage.descentRateMph,
+            horizontalSpeedMph = LocalStorage.horizontalSpeedMph,
+            jumprunDirection = LocalStorage.jumprunDirection
+        )
+    }
+
+    fun saveToLocalStorage() {
+        LocalStorage.startAltitude = startAltitude
+        LocalStorage.endAltitude = endAltitude
+        LocalStorage.descentRateMph = descentRateMph
+        LocalStorage.horizontalSpeedMph = horizontalSpeedMph
+        LocalStorage.jumprunDirection = jumprunDirection
     }
 }
 

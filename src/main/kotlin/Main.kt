@@ -39,7 +39,7 @@ val App = FC<Props> {
         +"Flocking Wind Calculator"
     }
 
-    var inputState: Input by useState(Input.INITIAL)
+    var inputState: Input by useState(Input.fromLocalStorage())
     var selectedDropzone: Dropzone by useState(LocalStorage.dropzone)
     var selectedHourOffset: Int by useState(0)
     var windsState: Winds? by useState(null)
@@ -55,6 +55,7 @@ val App = FC<Props> {
         input = inputState
         onInputChanged = { newInput ->
             inputState = newInput
+            newInput.saveToLocalStorage()
             console.log("Input changed to $newInput")
         }
     }
