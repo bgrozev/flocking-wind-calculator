@@ -40,7 +40,7 @@ val App = FC<Props> {
     }
 
     var inputState: Input by useState(Input.INITIAL)
-    var selectedDropzone: Dropzone by useState(dropzones[0])
+    var selectedDropzone: Dropzone by useState(LocalStorage.dropzone)
     var selectedHourOffset: Int by useState(0)
     var windsState: Winds? by useState(null)
     getDropzone = { Pair(selectedDropzone, selectedHourOffset) }
@@ -69,6 +69,7 @@ val App = FC<Props> {
             selectedDropzone = dropzone
             selectedHourOffset = hourOffset
             if (changed) {
+                LocalStorage.dropzone = dropzone
                 windsState = null
                 GlobalScope.launch { fetchWinds() }
             }
