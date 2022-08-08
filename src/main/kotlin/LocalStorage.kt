@@ -20,12 +20,18 @@ class LocalStorage {
         var descentRateMph: Double by localStorage("descentRateMph", DEFAULT.descentRateMph)
         var horizontalSpeedMph: Double by localStorage("horizontalSpeedMph", DEFAULT.horizontalSpeedMph)
         var jumprunDirection: Double by localStorage("jumprunDirection", DEFAULT.jumprunDirection)
+
+        var hourOffset: Double by localStorage("hourOffset", 0.0)
+        var showWinds: Boolean by localStorage("showWinds", false)
     }
 }
 
-inline fun localStorage(key: String, defaultValue: Double): ReadWriteProperty<Any?, Double> =
-    Delegates.observable(window.localStorage.getItem(key)?.toDouble() ?: defaultValue) { property, oldValue, newValue ->
+fun <T> localStorage(key: String, defaultValue: T, toT: (String) -> T): ReadWriteProperty<Any?, T> =
+    Delegates.observable(window.localStorage.getItem(key)?.let { toT(it) } ?: defaultValue) { _, oldValue, newValue ->
         if (oldValue != newValue) {
             window.localStorage.setItem(key, newValue.toString())
         }
     }
+
+fun localStorage(key: String, defaultValue: Double) = localStorage(key, defaultValue) { it.toDouble() }
+fun localStorage(key: String, defaultValue: Boolean) = localStorage(key, defaultValue) { it.toBoolean() }

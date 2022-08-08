@@ -52,10 +52,10 @@ val DropzonesComponent = FC<DropzonesProps> { props ->
         dropzones.forEach {
             ReactHTML.option {
                 +it.name
-                selected = it.name == LocalStorage.dropzone.name
                 value = it.name
             }
         }
+        defaultValue = LocalStorage.dropzone.name
     }
     DoubleInputField {
         name = "Latitude"

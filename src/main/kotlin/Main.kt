@@ -5,9 +5,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.*
 import react.dom.html.ReactHTML.br
+import react.dom.html.ReactHTML.button
 import react.dom.render
 import react.dom.html.ReactHTML.h1
 import react.dom.html.ReactHTML.p
+import react.dom.onChange
 
 fun main() {
     val container = document.getElementById("root") ?: return
@@ -41,8 +43,9 @@ val App = FC<Props> {
 
     var inputState: Input by useState(Input.fromLocalStorage())
     var selectedDropzone: Dropzone by useState(LocalStorage.dropzone)
-    var selectedHourOffset: Int by useState(0)
+    var selectedHourOffset: Int by useState(LocalStorage.hourOffset.toInt())
     var windsState: Winds? by useState(null)
+    var showWinds: Boolean by useState(LocalStorage.showWinds)
     getDropzone = { Pair(selectedDropzone, selectedHourOffset) }
     useEffect {
         subscribeToWinds { w ->
@@ -71,6 +74,7 @@ val App = FC<Props> {
             selectedHourOffset = hourOffset
             if (changed) {
                 LocalStorage.dropzone = dropzone
+                LocalStorage.hourOffset = hourOffset.toDouble()
                 windsState = null
                 GlobalScope.launch { fetchWinds() }
             }
@@ -93,8 +97,16 @@ val App = FC<Props> {
             winds = w
             input = inputState
         }
+        br { }
+        br { }
 
-        WindsContainer { winds = w }
+        button {
+            +if (showWinds) "Hide winds" else "Show winds"
+            onClick = { showWinds = !showWinds }
+        }
+        if (showWinds) {
+            WindsContainer { winds = w }
+        }
     }
     // Map { }
 }

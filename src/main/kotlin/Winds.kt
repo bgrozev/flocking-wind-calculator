@@ -14,7 +14,6 @@ external interface WindsProps : Props {
 }
 
 val WindsContainer = FC<WindsProps> { props ->
-    p { +"Winds: " }
     table {
         thead {
             tr {
