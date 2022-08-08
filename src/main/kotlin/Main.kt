@@ -78,7 +78,8 @@ val App = FC<Props> {
         +"Fetching winds..."
     }
     else {
-        +"WindsAloft for lat=${w.lat} lon=${w.lon} fetched at ${w.fetchTime}"
+        val dz = dropzones.find { it.latitude == w.lat && it.longitude == w.lon }
+        +"WindsAloft for ${dz?.name ?: "lat=${w.lat}, lon=${w.lon}"} fetched at ${w.fetchTime}"
         br { }
         br { }
         Drift {
