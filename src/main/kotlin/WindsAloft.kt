@@ -2,10 +2,13 @@ package net.mustelinae.drift
 
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.js.Date
+import kotlin.math.floor
+import kotlin.math.round
 
 data class Winds(
     val windsAloft: WindsAloft,
@@ -20,8 +23,43 @@ class WindsAloft(
     //val groundDir: String, // This is sometimes String (RAP) sometimes Int (GFS).
     val altFt: List<Int>,
     val direction: Map<String, Int>,
-    val speed: Map<String, Int>
-)
+    val speed: Map<String, Int>,
+    @Contextual
+    val validtime: Int
+) {
+    // Usually int, but sometimes "00"?
+    fun getValidtime(): Int = validtime.toString().toInt()
+}
+
+fun WindsAloft.getValidAtString(): String {
+    val now = Date()
+    val nowUTC = Date(now.getTime() + now.getTimezoneOffset() * 60000)
+    val validTime = Date(nowUTC.getFullYear(), nowUTC.getMonth(), nowUTC.getDate(), getValidtime(), 0, 0)
+    val minDiff = round((nowUTC.getTime() - validTime.getTime()) / 60000)
+
+    return when {
+        minDiff < 60 && minDiff >= 0 -> "Forecast valid now"
+        minDiff < 0 && minDiff > -60 -> {
+            var min = -minDiff
+            if (min > 5)
+                min = round(min / 5) * 5
+            "Forecast valid in about $min minute${if (min > 0) "s" else ""}"
+        }
+        minDiff >= 60 -> {
+            val hr = floor(minDiff / 60);
+            val min = round((minDiff - hr * 60) / 5) * 5;
+            val minStr = if (min < 10) "0$min" else "$min"
+            "Forecast valid about $hr:$minStr ago"
+        }
+        else -> {
+            val hr = floor(-minDiff / 60);
+            val min = round((-minDiff - hr * 60) / 5) * 5;
+            val minStr = if (min < 10) "0$min" else "$min"
+            "Forecast valid in about $hr:$minStr"
+        }
+    }
+}
+
 
 // https://markschulze.net/winds/winds.php?lat=${lat}&lon=${lon}&hourOffset=0&referrer=testing
 
@@ -32,12 +70,12 @@ suspend fun getWindsAloft(lat: Double, lon: Double): Winds {
     //val x = window.fetch("https://markschulze.net/winds/winds.php?lat=${lat}&lon=${lon}&hourOffset=0&referrer=testing")
     val x = window.fetch("https://mustelinae.net/winds-aloft?lat=${lat}&lon=${lon}&hourOffset=0")
         .then { it.json() }.then { it }.await()
-    val j: WindsAloft = json.decodeFromString(JSON.stringify(x))
+    val windsAloft: WindsAloft = json.decodeFromString(JSON.stringify(x))
     return Winds(
-        j,
-        Date().toTimeString(),
-        lat,
-        lon
+        windsAloft = windsAloft,
+        fetchTime = Date().toTimeString(),
+        lat =lat,
+        lon = lon
     )
 }
 fun getSampleWindsAloft(): Winds {
