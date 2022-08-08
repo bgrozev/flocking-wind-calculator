@@ -31,11 +31,11 @@ class WindsAloft(
     fun getValidtime(): Int = validtime.toString().toInt()
 }
 
-fun WindsAloft.getValidAtString(): String {
+fun WindsAloft.getValidAtString(hourOffset: Int): String {
     val now = Date()
-    val nowUTC = Date(now.getTime() + now.getTimezoneOffset() * 60000)
+    val nowUTC = Date(now.getTime() + (now.getTimezoneOffset() + hourOffset * 60) * 60000);
     val validTime = Date(nowUTC.getFullYear(), nowUTC.getMonth(), nowUTC.getDate(), getValidtime(), 0, 0)
-    val minDiff = round((nowUTC.getTime() - validTime.getTime()) / 60000)
+    val minDiff = round((nowUTC.getTime() - validTime.getTime()) / 60000) - hourOffset * 60
 
     return when {
         minDiff < 60 && minDiff >= 0 -> "Forecast valid now"
