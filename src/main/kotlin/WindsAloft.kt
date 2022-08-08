@@ -66,9 +66,9 @@ fun WindsAloft.getValidAtString(): String {
 val json = Json {
     ignoreUnknownKeys = true
 }
-suspend fun getWindsAloft(lat: Double, lon: Double): Winds {
+suspend fun getWindsAloft(lat: Double, lon: Double, hourOffset: Int): Winds {
     //val x = window.fetch("https://markschulze.net/winds/winds.php?lat=${lat}&lon=${lon}&hourOffset=0&referrer=testing")
-    val x = window.fetch("https://mustelinae.net/winds-aloft?lat=${lat}&lon=${lon}&hourOffset=0")
+    val x = window.fetch("https://mustelinae.net/winds-aloft?lat=${lat}&lon=${lon}&hourOffset=$hourOffset")
         .then { it.json() }.then { it }.await()
     val windsAloft: WindsAloft = json.decodeFromString(JSON.stringify(x))
     return Winds(

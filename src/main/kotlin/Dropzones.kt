@@ -1,8 +1,13 @@
 package net.mustelinae.drift
 
+import csstype.px
 import react.FC
 import react.Props
+import react.css.css
+import react.dom.html.InputType
 import react.dom.html.ReactHTML
+import react.dom.html.ReactHTML.input
+import react.key
 
 // https://markschulze.net/winds/dropzones.geojson
 val dropzones = listOf(
@@ -34,14 +39,15 @@ data class Dropzone(
 
 external interface DropzonesProps : Props {
     var selected: Dropzone
-    var onChange: (Dropzone) -> Unit
+    var hourOffset: Int
+    var onChange: (Dropzone, Int) -> Unit
 }
 
 val DropzonesComponent = FC<DropzonesProps> { props ->
     +"Dropzone: "
     ReactHTML.select {
         onChange = {
-            props.onChange(findDropzone(it.target.value))
+            props.onChange(findDropzone(it.target.value), props.hourOffset)
         }
         dropzones.forEach {
             ReactHTML.option {
@@ -54,11 +60,14 @@ val DropzonesComponent = FC<DropzonesProps> { props ->
         name = "Latitude"
         value = props.selected.latitude
         onChange = {
-            props.onChange(Dropzone(
-                Dropzone.CUSTOM_NAME,
-                it,
-                props.selected.longitude
-            ))
+            props.onChange(
+                Dropzone(
+                    Dropzone.CUSTOM_NAME,
+                    it,
+                    props.selected.longitude
+                ),
+                props.hourOffset
+            )
         }
         disabled = !props.selected.isCustom()
     }
@@ -66,12 +75,34 @@ val DropzonesComponent = FC<DropzonesProps> { props ->
         name = "Longitude"
         value = props.selected.longitude
         onChange = {
-            props.onChange(Dropzone(
-                Dropzone.CUSTOM_NAME,
-                props.selected.latitude,
-                it
-            ))
+            props.onChange(
+                Dropzone(
+                    Dropzone.CUSTOM_NAME,
+                    props.selected.latitude,
+                    it
+                ),
+                props.hourOffset
+            )
         }
         disabled = !props.selected.isCustom()
+    }
+    ReactHTML.div {
+        +"Hour offset "
+        input {
+            name = "Hour offset"
+            type = InputType.number
+            key = "hourOffset"
+            value = props.hourOffset.toString()
+            onChange = {
+                console.log("hourOffset changed to ${it.target.value}")
+                props.onChange(
+                    props.selected,
+                    it.target.value.toInt()
+                )
+            }
+            css {
+                width = 50.px
+            }
+        }
     }
 }

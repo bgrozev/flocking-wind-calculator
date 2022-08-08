@@ -2,7 +2,6 @@ package net.mustelinae.drift
 
 import kotlinx.browser.document
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import react.*
 import react.dom.html.ReactHTML.br
@@ -19,7 +18,7 @@ fun main() {
 suspend fun fetchWinds() {
     getDropzone()?.let {
         console.log("Fetching winds for $it")
-        val w = getWindsAloft(it.latitude, it.longitude)
+        val w = getWindsAloft(it.first.latitude, it.first.longitude, it.second)
         console.log("Fetched winds, setting")
         onWindsChanged(w)
     } ?: run {
@@ -33,7 +32,7 @@ var onWindsChanged: (Winds?) -> Unit = {
 fun subscribeToWinds(f: (Winds?) -> Unit) {
     onWindsChanged = f
 }
-var getDropzone: () -> Dropzone? = { null }
+var getDropzone: () -> Pair<Dropzone, Int>? = { null }
 
 val App = FC<Props> {
     h1 {
@@ -42,8 +41,9 @@ val App = FC<Props> {
 
     var inputState: Input by useState(Input.INITIAL)
     var selectedDropzone: Dropzone by useState(dropzones[0])
+    var selectedHourOffset: Int by useState(0)
     var windsState: Winds? by useState(null)
-    getDropzone = { selectedDropzone }
+    getDropzone = { Pair(selectedDropzone, selectedHourOffset) }
     useEffect {
         subscribeToWinds { w ->
             console.log("Got new winds $w")
@@ -62,13 +62,16 @@ val App = FC<Props> {
     p { }
     DropzonesComponent {
         selected = selectedDropzone
-        onChange = { dropzone ->
-            console.log("Dropzone changed to $dropzone" )
-            if (selectedDropzone != dropzone) {
+        hourOffset = selectedHourOffset
+        onChange = { dropzone, hourOffset ->
+            console.log("Dropzone changed to $dropzone (hourOffset=$hourOffset)" )
+            val changed = selectedDropzone != dropzone || selectedHourOffset != hourOffset
+            selectedDropzone = dropzone
+            selectedHourOffset = hourOffset
+            if (changed) {
                 windsState = null
                 GlobalScope.launch { fetchWinds() }
             }
-            selectedDropzone = dropzone
         }
     }
 
