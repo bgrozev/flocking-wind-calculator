@@ -7,7 +7,9 @@ import react.dom.html.ReactHTML
 // https://markschulze.net/winds/dropzones.geojson
 val dropzones = listOf(
     Dropzone("Chicagoland Skydiving Center", 41.8911147, -89.0802674),
+    Dropzone("Cleveland Skydiving Center", 41.35177, -81.09911),
     Dropzone("Jumptown", 42.567890, -72.282715),
+    Dropzone("Skydive Empuriabrava", 42.25885, 3.10953),
     Dropzone("Skydive Paraclete XP (Raeford)", 35.01910, -79.19060),
     Dropzone("Skydive Phoenix", 33.0531729, -112.1751402),
     Dropzone("Skydive Spaceland Dallas", 33.4492, -96.3783),
