@@ -38,24 +38,24 @@ fun WindsAloft.getValidAtString(hourOffset: Int): String {
     val minDiff = round((nowUTC.getTime() - validTime.getTime()) / 60000) - hourOffset * 60
 
     return when {
-        minDiff < 60 && minDiff >= 0 -> "Forecast valid now"
+        minDiff < 60 && minDiff >= 0 -> "now"
         minDiff < 0 && minDiff > -60 -> {
             var min = -minDiff
             if (min > 5)
                 min = round(min / 5) * 5
-            "Forecast valid in about $min minute${if (min > 0) "s" else ""}"
+            "in about $min minute${if (min > 0) "s" else ""}"
         }
         minDiff >= 60 -> {
             val hr = floor(minDiff / 60);
             val min = round((minDiff - hr * 60) / 5) * 5;
             val minStr = if (min < 10) "0$min" else "$min"
-            "Forecast valid about $hr:$minStr ago"
+            "about $hr:$minStr ago"
         }
         else -> {
             val hr = floor(-minDiff / 60);
             val min = round((-minDiff - hr * 60) / 5) * 5;
             val minStr = if (min < 10) "0$min" else "$min"
-            "Forecast valid in about $hr:$minStr"
+            "in about $hr:$minStr"
         }
     }
 }
@@ -73,11 +73,21 @@ suspend fun getWindsAloft(lat: Double, lon: Double, hourOffset: Int): Winds {
     val windsAloft: WindsAloft = json.decodeFromString(JSON.stringify(x))
     return Winds(
         windsAloft = windsAloft,
-        fetchTime = Date().toTimeString(),
-        lat =lat,
+        fetchTime = nowTimeString(),
+        lat = lat,
         lon = lon
     )
 }
+
+fun nowTimeString() = Date().toLocaleTimeString(
+    "en-US",
+    dateLocaleOptions {
+        hour12 = false
+        hour = "numeric"
+        minute = "numeric"
+        second = "numeric"
+})
+
 fun getSampleWindsAloft(): Winds {
     return Winds(json.decodeFromString(sampleWindsJsonGFS), "now", 0.0, 0.0)
 }

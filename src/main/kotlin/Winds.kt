@@ -1,8 +1,9 @@
 package net.mustelinae.drift
 
+import csstype.FontWeight
 import react.FC
 import react.Props
-import react.dom.html.ReactHTML.p
+import react.css.css
 import react.dom.html.ReactHTML.table
 import react.dom.html.ReactHTML.tbody
 import react.dom.html.ReactHTML.th
@@ -15,6 +16,7 @@ external interface WindsProps : Props {
 
 val WindsContainer = FC<WindsProps> { props ->
     table {
+        className = "windsTable"
         thead {
             tr {
                 th { +"Altitude (ft)" }

@@ -1,0 +1,49 @@
+body {
+  background-color: powderblue;
+  font-family: 'Helvetica';
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+.poweredby {
+  font-size: 70%;
+  margin-top: 0;
+}
+
+.inputNumber {
+  width: 50px;
+}
+
+.inputLatLon {
+  width: 100px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 200px 200px;
+}
+
+.container {
+  /*border: 1px solid;*/
+  /*width: 400px;
+  height: 15em;
+  /*border: 5px solid rgb(111,41,97);
+  border-radius: .5em;
+  padding: 10px;
+  justify-content: space-between;
+  align-content: space-between;
+  */
+}
+
+
+.windsTable {
+  font-weight: lighter;
+}
+tr:nth-child(odd) {
+  background-color: #90c0c6;
+}
+th {
+  font-weight: lighter;
+}

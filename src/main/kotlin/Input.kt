@@ -1,12 +1,8 @@
 package net.mustelinae.drift
 
-import csstype.px
 import react.FC
 import react.Props
-import react.css.css
 import react.dom.html.InputType
-import react.dom.html.ReactHTML
-import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.input
@@ -47,166 +43,173 @@ external interface InputContainerProps : Props {
 
 val InputContainer = FC<InputContainerProps> { props ->
     div {
-        +"Altitude from "
-        input {
-            type = InputType.number
-            key = "start-altitude"
-            value = props.input.startAltitude.toString()
-            onChange = {
-                console.log("Start altitude changed to ${it.target.value}")
-                props.onInputChanged(
-                    Input(
-                        it.target.value.toDouble(),
-                        props.input.endAltitude,
-                        props.input.descentRateMph,
-                        props.input.horizontalSpeedMph,
-                        props.input.jumprunDirection
+        className = "grid container"
+        +"Altitude from:"
+        div {
+            input {
+                type = InputType.number
+                className = "inputNumber"
+                key = "start-altitude"
+                value = props.input.startAltitude.toString()
+                onChange = {
+                    console.log("Start altitude changed to ${it.target.value}")
+                    props.onInputChanged(
+                        Input(
+                            it.target.value.toDouble(),
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            props.input.jumprunDirection
+                        )
                     )
-                )
+                }
             }
-            css {
-                width = 50.px
-            }
+            +" kft"
         }
-        +" kft down to "
-        input {
-            type = InputType.number
-            key = "end-altitude"
-            value = props.input.endAltitude.toString()
-            onChange = {
-                console.log("End altitude changed to ${it.target.value}")
-                props.onInputChanged(
-                    Input(
-                        props.input.startAltitude,
-                        it.target.value.toDouble(),
-                        props.input.descentRateMph,
-                        props.input.horizontalSpeedMph,
-                        props.input.jumprunDirection
+        +"Down to:"
+        div {
+            input {
+                type = InputType.number
+                key = "end-altitude"
+                value = props.input.endAltitude.toString()
+                onChange = {
+                    console.log("End altitude changed to ${it.target.value}")
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            it.target.value.toDouble(),
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            props.input.jumprunDirection
+                        )
                     )
-                )
+                }
+                className = "inputNumber"
             }
-            css {
-                width = 50.px
+            +" kft"
+        }
+        +"Descent rate:"
+        div {
+            input {
+                type = InputType.number
+                key = "descent-rate"
+                value = props.input.descentRateMph.toString()
+                onChange = {
+                    console.log("descent rate changed to ${it.target.value}")
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            it.target.value.toDouble(),
+                            props.input.horizontalSpeedMph,
+                            props.input.jumprunDirection
+                        )
+                    )
+                }
+                className = "inputNumber"
+            }
+            +" mph"
+        }
+        +"Horizontal speed:"
+        div {
+            input {
+                type = InputType.number
+                key = "horizontal-speed"
+                value = props.input.horizontalSpeedMph.toString()
+                onChange = {
+                    console.log("horizontal speed changed to ${it.target.value}")
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            it.target.value.toDouble(),
+                            props.input.jumprunDirection
+                        )
+                    )
+                }
+                className = "inputNumber"
+            }
+            +" mph"
+        }
+        div {
+            button {
+                +"Flow"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            21.0,
+                            50.0,
+                            props.input.jumprunDirection
+                        )
+                    )
+                }
+            }
+            button {
+                +"Float"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            17.0,
+                            40.0,
+                            props.input.jumprunDirection
+                        )
+                    )
+                }
+            }
+            button {
+                +"XRW"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            40.0,
+                            70.0,
+                            props.input.jumprunDirection
+                        )
+                    )
+                }
             }
         }
-        + "kft."
-    }
+        div {}
 
-    +"Descent rate "
-    input {
-        type = InputType.number
-        key = "descent-rate"
-        value = props.input.descentRateMph.toString()
-        onChange = {
-            console.log("descent rate changed to ${it.target.value}")
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    it.target.value.toDouble(),
-                    props.input.horizontalSpeedMph,
-                    props.input.jumprunDirection
-                )
-            )
-        }
-        css {
-            width = 50.px
-        }
-    }
-    +" mph, horizontal speed "
-    input {
-        type = InputType.number
-        key = "horizontal-speed"
-        value = props.input.horizontalSpeedMph.toString()
-        onChange = {
-            console.log("horizontal speed changed to ${it.target.value}")
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    props.input.descentRateMph,
-                    it.target.value.toDouble(),
-                    props.input.jumprunDirection
-                )
-            )
-        }
-        css {
-            width = 50.px
+        +"Canopy flight direction: "
+        div {
+            input {
+                type = InputType.number
+                key = "jumprun"
+                value = props.input.jumprunDirection.toString()
+                onChange = {
+                    console.log("jumprun changed to ${it.target.value}")
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            it.target.value.toDouble()
+                        )
+                    )
+                }
+                className = "inputNumber"
+            }
+            +"˚"
         }
     }
-    +" mph. "
-    button {
-        +"Flow"
-        onClick = {
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    21.0,
-                    50.0,
-                    props.input.jumprunDirection
-                )
-            )
-        }
-    }
-    button {
-        +"Float"
-        onClick = {
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    17.0,
-                    40.0,
-                    props.input.jumprunDirection
-                )
-            )
-        }
-    }
-    button {
-        +"XRW"
-        onClick = {
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    40.0,
-                    70.0,
-                    props.input.jumprunDirection
-                )
-            )
-        }
-    }
-
-    br { }
-    +"Canopy flight direction: "
-    input {
-        type = InputType.number
-        key = "jumprun"
-        value = props.input.jumprunDirection.toString()
-        onChange = {
-            console.log("jumprun changed to ${it.target.value}")
-            props.onInputChanged(
-                Input(
-                    props.input.startAltitude,
-                    props.input.endAltitude,
-                    props.input.descentRateMph,
-                    props.input.horizontalSpeedMph,
-                    it.target.value.toDouble()
-                )
-            )
-        }
-        css {
-            width = 50.px
-        }
-    }
-    +"˚"
 }
 
 val DoubleInputField = FC<InputFieldProps<Double>> { props ->
-    ReactHTML.div {
+    div {
         +props.name
-        ReactHTML.input {
+    }
+    div {
+        input {
+            props.className?.let { className = it }
             type = InputType.number
             key = props.name
             value = props.value.toString()
@@ -221,6 +224,7 @@ val DoubleInputField = FC<InputFieldProps<Double>> { props ->
 
 external interface InputFieldProps<T> : Props {
     var name: String
+    var className: String?
     var value: T
     var onChange: (T) -> Unit
     var disabled: Boolean

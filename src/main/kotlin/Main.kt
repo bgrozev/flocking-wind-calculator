@@ -1,16 +1,18 @@
 package net.mustelinae.drift
 
-import csstype.px
+import csstype.FontWeight.Companion.bold
 import kotlinx.browser.document
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.*
-import react.css.css
 import react.dom.html.ReactHTML.a
+import react.dom.html.ReactHTML.b
 import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
+import react.dom.html.ReactHTML.div
 import react.dom.render
 import react.dom.html.ReactHTML.h2
+import react.dom.html.ReactHTML.hr
 import react.dom.html.ReactHTML.p
 import react.dom.html.ReactHTML.small
 
@@ -42,20 +44,13 @@ var getDropzone: () -> Pair<Dropzone, Int>? = { null }
 val App = FC<Props> {
     h2 {
         +"Flocking Wind Calculator"
-        css {
-            marginBottom = 0.px
-        }
     }
     p {
-        small {
-            +"Powered by "
-            a {
-                href = "https://www.markschulze.net/winds/"
-                +"Winds Aloft by Mark Schulze"
-            }
-        }
-        css {
-            marginTop = 0.px
+        className = "poweredby"
+        +"Powered by "
+        a {
+            href = "https://www.markschulze.net/winds/"
+            +"Winds Aloft by Mark Schulze"
         }
     }
 
@@ -100,27 +95,36 @@ val App = FC<Props> {
     }
 
     p { }
+    hr { }
     val w = windsState
     if (w == null) {
         +"Fetching winds..."
     }
     else {
         val dz = dropzones.find { it.latitude == w.lat && it.longitude == w.lon }
-        +"WindsAloft for ${dz?.name ?: "lat=${w.lat}, lon=${w.lon}"} fetched at ${w.fetchTime}"
+        div {
+            className = "container grid"
+            div { +"WindsAloft for:" }
+            div { +(dz?.name ?: "lat=${w.lat}, lon=${w.lon}") }
+            div { +"Fetched at:" }
+            div { +w.fetchTime }
+            div { +"Forcast valid:" }
+            div { +w.windsAloft.getValidAtString(selectedHourOffset) } }
         br { }
-        +w.windsAloft.getValidAtString(selectedHourOffset)
-        br { }
-        br { }
-        Drift {
-            winds = w
-            input = inputState
+        div {
+            className = "container grid"
+            Drift {
+                winds = w
+                input = inputState
+            }
         }
-        br { }
-        br { }
-
+        hr { }
         button {
             +if (showWinds) "Hide winds" else "Show winds"
-            onClick = { showWinds = !showWinds }
+            onClick = {
+                LocalStorage.showWinds = !showWinds
+                showWinds = !showWinds
+            }
         }
         if (showWinds) {
             WindsContainer { winds = w }

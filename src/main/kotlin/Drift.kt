@@ -2,7 +2,7 @@ package net.mustelinae.drift
 
 import react.FC
 import react.Props
-import react.dom.html.ReactHTML.br
+import react.dom.html.ReactHTML.div
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan
@@ -14,11 +14,13 @@ val Drift = FC<DriftProps> { props ->
     val i = props.input
     val windDrift = windDrift(props.winds.windsAloft, i.startAltitude, i.endAltitude, i.descentRateMph)
     val canopyDrift = canopyDrift(i.startAltitude, i.endAltitude, i.horizontalSpeedMph, i.descentRateMph, i.jumprunDirection)
-    +"Wind drift: ${windDrift.toCardinalString()}"
-    br { }
-    +"Canopy flight: ${canopyDrift.toCardinalString()}"
-    br { }
-    +"Combined: ${(windDrift+canopyDrift).toCardinalString()}"
+
+    div { +"Wind drift:" }
+    div { +windDrift.toCardinalString() }
+    div { +"Canopy flight:" }
+    div { +canopyDrift.toCardinalString() }
+    div { +"Combined:" }
+    div { +(windDrift+canopyDrift).toCardinalString() }
 }
 
 external interface DriftProps : Props {
