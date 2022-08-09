@@ -5,7 +5,6 @@ import react.FC
 import react.Props
 import react.css.css
 import react.dom.html.InputType
-import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.input
@@ -19,7 +18,7 @@ data class Input(
     val jumprunDirection: Double
 ) {
     companion object {
-        val DEFAULT = Input(12.0, 4.0, 21.0, 50.0, 180.0)
+        val DEFAULT = Input(12.0, 4.0, 21.0, 50.0, -1.0)
 
         fun fromLocalStorage() = Input(
             startAltitude = LocalStorage.startAltitude,

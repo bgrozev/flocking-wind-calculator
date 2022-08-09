@@ -1,12 +1,10 @@
 package net.mustelinae.drift
 
-import csstype.FontWeight.Companion.bold
 import kotlinx.browser.document
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.*
 import react.dom.html.ReactHTML.a
-import react.dom.html.ReactHTML.b
 import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
@@ -103,7 +101,7 @@ val App = FC<Props> {
     else {
         val dz = dropzones.find { it.latitude == w.lat && it.longitude == w.lon }
         div {
-            className = "container grid"
+            className = "grid container"
             div { +"WindsAloft for:" }
             div { +(dz?.name ?: "lat=${w.lat}, lon=${w.lon}") }
             div { +"Fetched at:" }
@@ -112,7 +110,7 @@ val App = FC<Props> {
             div { +w.windsAloft.getValidAtString(selectedHourOffset) } }
         br { }
         div {
-            className = "container grid"
+            className = "grid container"
             Drift {
                 winds = w
                 input = inputState
