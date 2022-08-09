@@ -1,8 +1,11 @@
 package net.mustelinae.drift
 
+import csstype.px
 import react.FC
 import react.Props
+import react.css.css
 import react.dom.html.InputType
+import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.input
@@ -178,8 +181,12 @@ val InputContainer = FC<InputContainerProps> { props ->
         }
         div {}
 
-        +"Canopy flight direction: "
         div {
+            css { marginTop = 10.px }
+            +"Canopy flight direction: "
+        }
+        div {
+            css { marginTop = 10.px }
             input {
                 type = InputType.number
                 key = "jumprun"
@@ -200,10 +207,82 @@ val InputContainer = FC<InputContainerProps> { props ->
             }
             +"˚"
         }
+        div {
+            button {
+                +"N"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            0.0
+                        )
+                    )
+                }
+            }
+            button {
+                +"E"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            90.0
+                        )
+                    )
+                }
+            }
+            button {
+                +"S"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            180.0
+                        )
+                    )
+                }
+            }
+            button {
+                +"W"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            270.0
+                        )
+                    )
+                }
+            }
+            button {
+                +"Into wind"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            props.input.descentRateMph,
+                            props.input.horizontalSpeedMph,
+                            -1.0
+                        )
+                    )
+                }
+            }
+        }
     }
 }
 
-val DoubleInputField = FC<InputFieldProps<Double>> { props ->
+    val DoubleInputField = FC<InputFieldProps<Double>> { props ->
     div {
         +props.name
     }

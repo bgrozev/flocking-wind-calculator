@@ -13,7 +13,9 @@ import kotlin.math.sqrt
 val Drift = FC<DriftProps> { props ->
     val i = props.input
     val windDrift = windDrift(props.winds.windsAloft, i.startAltitude, i.endAltitude, i.descentRateMph)
-    val canopyDrift = canopyDrift(i.startAltitude, i.endAltitude, i.horizontalSpeedMph, i.descentRateMph, i.jumprunDirection)
+
+    val jumprunDirection = if (i.jumprunDirection >= 0) i.jumprunDirection else (windDrift.cardinalDirection + 180) % 360
+    val canopyDrift = canopyDrift(i.startAltitude, i.endAltitude, i.horizontalSpeedMph, i.descentRateMph, jumprunDirection)
 
     div { +"Wind drift:" }
     div { +windDrift.toCardinalString() }
