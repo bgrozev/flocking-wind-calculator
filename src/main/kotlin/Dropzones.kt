@@ -1,9 +1,7 @@
 package net.mustelinae.drift
 
-import csstype.px
 import react.FC
 import react.Props
-import react.css.css
 import react.dom.html.InputType
 import react.dom.html.ReactHTML
 import react.dom.html.ReactHTML.div
@@ -18,6 +16,7 @@ val dropzones = listOf(
     Dropzone("Skydive Empuriabrava", 42.259, 3.109),
     Dropzone("Skydive Paraclete XP (Raeford)", 35.019, -79.191),
     Dropzone("Skydive Phoenix", 33.053, -112.175),
+    Dropzone("Skydive Spaceland Atlanta", 33.977, -85.166),
     Dropzone("Skydive Spaceland Dallas", 33.449, -96.378),
     Dropzone("Skydive Spaceland Houston", 29.357, -95.459),
     Dropzone("Skydive Spaceland San Marcos", 29.768, -97.775),
