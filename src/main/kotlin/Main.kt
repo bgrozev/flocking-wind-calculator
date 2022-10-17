@@ -130,7 +130,7 @@ val App = FC<Props> {
     }
 
     p {
-        small { +"For questions or feedback email boris at mustelinae.net" }
+        small { +"For questions, feedback, or request to add a DZ email boris at mustelinae.net" }
     }
     // Map { }
 }
