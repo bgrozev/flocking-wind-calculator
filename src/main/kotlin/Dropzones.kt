@@ -17,6 +17,7 @@ val dropzones = listOf(
     Dropzone("Skydive City (ZHills)", 28.220, -82.151),
     Dropzone("Skydive Elsinore", 33.631, -117.296),
     Dropzone("Skydive Empuriabrava", 42.259, 3.109),
+    Dropzone("Skydive Grand Haven", 43.035, -86.200),
     Dropzone("Skydive Kapowsin", 47.242, -123.142),
     Dropzone("Skydive Snohomish", 47.907, -122.101),
     Dropzone("Skydive Paraclete XP (Raeford)", 35.019, -79.191),
