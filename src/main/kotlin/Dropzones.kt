@@ -12,6 +12,7 @@ import react.key
 val dropzones = listOf(
     Dropzone("Chicagoland Skydiving Center", 41.891, -89.080),
     Dropzone("Cleveland Skydiving Center", 41.352, -81.099),
+    Dropzone("Jump Georgia Skydiving", 32.650, -81.598),
     Dropzone("Jumptown", 42.568, -72.283),
     Dropzone("Skydive Arizona", 32.805, -111.584),
     Dropzone("Skydive City (ZHills)", 28.220, -82.151),
