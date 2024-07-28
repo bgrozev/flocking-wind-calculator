@@ -25,7 +25,7 @@ val WindsContainer = FC<WindsProps> { props ->
             }
         }
         tbody {
-            (0..18).forEach {
+            (0..40).forEach {
                 tr {
                     val altitude = props.winds.windsAloft.altFt[it].toString()
                     th { +altitude }
