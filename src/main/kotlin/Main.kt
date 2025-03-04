@@ -51,6 +51,14 @@ val App = FC<Props> {
             +"Winds Aloft by Mark Schulze"
         }
     }
+    p {
+        className = "poweredby"
+        +"See also: "
+        a {
+            href = "https://flip.mustelinae.net"
+            +"FliP Flight Planner"
+        }
+    }
 
     var inputState: Input by useState(Input.fromLocalStorage())
     var selectedDropzone: Dropzone by useState(LocalStorage.dropzone)
