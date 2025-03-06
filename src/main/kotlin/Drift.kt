@@ -2,13 +2,10 @@ package net.mustelinae.drift
 
 import react.FC
 import react.Props
+import react.dom.html.ReactHTML.b
 import react.dom.html.ReactHTML.div
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.atan
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import react.dom.html.ReactHTML.hr
+import kotlin.math.*
 
 val Drift = FC<DriftProps> { props ->
     val i = props.input
@@ -16,13 +13,49 @@ val Drift = FC<DriftProps> { props ->
 
     val jumprunDirection = if (i.jumprunDirection >= 0) i.jumprunDirection else (windDrift.cardinalDirection + 180) % 360
     val canopyDrift = canopyDrift(i.startAltitude, i.endAltitude, i.horizontalSpeedMph, i.descentRateMph, jumprunDirection)
+    val combined = windDrift + canopyDrift
 
     div { +"Wind drift:" }
     div { +windDrift.toCardinalString(props.nautical) }
     div { +"Canopy flight:" }
     div { +canopyDrift.toCardinalString(props.nautical) }
     div { +"Combined:" }
-    div { +(windDrift+canopyDrift).toCardinalString(props.nautical) }
+    div { +combined.toCardinalString(props.nautical) }
+
+    // canopy flight is always in jumprun direction
+    val base = canopyDrift * (1 / canopyDrift.length)
+    val proj = combined.proj(base)
+    console.log("base=${base.first}, ${base.second}, len=${base.length}")
+    console.log("proj=${proj.first}, ${proj.second}, len=${proj.length}")
+    console.log("combined=${combined.first}, ${combined.second}, len=${combined.length}")
+
+    val units = if (props.nautical) "nm" else "miles"
+    val priorLen = if (props.nautical) proj.length.miToNm() else proj.length
+    val prior = canopyDrift.dot(proj) > 0
+    val offsetLen = if (props.nautical) (combined - proj).length.miToNm() else (combined - proj).length
+
+    val left = (combined - proj).dot(MilesVector(combined.second, -combined.first)) > 0
+    hr {}
+    hr {}
+    div { +"Forecasted Spot: " }
+    div {
+        +"Jumprun ${jumprunDirection.toInt()}˚"
+    }
+    div {}
+    div {
+        +"${priorLen.absoluteValue.format(2)} $units "
+        if (prior) {
+            +"prior"
+        } else {
+            b { +"PAST" }
+        }
+    }
+    if (offsetLen.absoluteValue > 0.05) {
+        div {}
+        div {
+            +"Offset ${offsetLen.absoluteValue.format(2)} $units ${if (left) "left" else "right"} "
+        }
+    }
 }
 
 external interface DriftProps : Props {
@@ -70,6 +103,10 @@ fun drift(seconds: Double, speedMph: Double, directionCardinal: Double): MilesVe
 
 typealias MilesVector = Pair<Double, Double>
 operator fun MilesVector.plus(other: MilesVector) = MilesVector(first + other.first, second + other.second)
+operator fun MilesVector.minus(other: MilesVector) = MilesVector(first - other.first, second - other.second)
+operator fun MilesVector.times(n: Double) = MilesVector(first * n, second * n)
+fun MilesVector.proj(base: MilesVector) = base * (this.dot(base) / base.dot(base))
+fun MilesVector.dot(other: MilesVector) = this.first * other.first + this.second * other.second
 val MilesVector.length: Double
     get() = sqrt(this.first * this.first + this.second * this.second)
 val MilesVector.cardinalDirection: Double
