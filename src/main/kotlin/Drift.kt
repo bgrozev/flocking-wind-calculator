@@ -18,16 +18,17 @@ val Drift = FC<DriftProps> { props ->
     val canopyDrift = canopyDrift(i.startAltitude, i.endAltitude, i.horizontalSpeedMph, i.descentRateMph, jumprunDirection)
 
     div { +"Wind drift:" }
-    div { +windDrift.toCardinalString() }
+    div { +windDrift.toCardinalString(props.nautical) }
     div { +"Canopy flight:" }
-    div { +canopyDrift.toCardinalString() }
+    div { +canopyDrift.toCardinalString(props.nautical) }
     div { +"Combined:" }
-    div { +(windDrift+canopyDrift).toCardinalString() }
+    div { +(windDrift+canopyDrift).toCardinalString(props.nautical) }
 }
 
 external interface DriftProps : Props {
     var winds: Winds
     var input: Input
+    var nautical: Boolean
 }
 
 fun canopyDrift(
@@ -85,11 +86,17 @@ val MilesVector.directionRad: Double
             else -> 0.0
         }
     }
-fun MilesVector.toCardinalString(): String = "${length.format(2)} miles at ${this.cardinalDirection.toInt()}˚"
+fun MilesVector.toCardinalString(nautical: Boolean = false): String {
+    val units = if (nautical) "nm" else "miles"
+    val l = if (nautical) length.miToNm() else length
+    return "${l.format(2)} $units at ${this.cardinalDirection.toInt()}˚"
+}
 fun Double.format(digits: Int): String = this.asDynamic().toFixed(digits) as String
 
 fun Double.mphToFps() = this * 5280 / 3600
 fun Double.ktsToMph() = this * 1.151
+
+fun Double.miToNm() = this / 1.15078
 
 fun Double.cardinalToDeg() = ((90 - this%360) + 360) % 360
 fun Double.degreeToRad() = this / 180.0 * PI

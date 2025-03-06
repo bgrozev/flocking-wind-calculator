@@ -32,6 +32,8 @@ class LocalStorage {
                 latitude = dropzone.latitude
                 longitude = dropzone.longitude
             }
+
+        var nautical: Boolean by localStorage("nautical", false)
     }
 }
 

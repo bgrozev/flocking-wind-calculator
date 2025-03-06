@@ -4,6 +4,8 @@ import kotlinx.browser.document
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import react.*
+import react.dom.html.InputType
+import react.dom.html.ReactHTML
 import react.dom.html.ReactHTML.a
 import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.button
@@ -65,6 +67,7 @@ val App = FC<Props> {
     var selectedHourOffset: Int by useState(LocalStorage.hourOffset.toInt())
     var windsState: Winds? by useState(null)
     var showWinds: Boolean by useState(LocalStorage.showWinds)
+    var nautical: Boolean by useState(LocalStorage.nautical)
     getDropzone = { Pair(selectedDropzone, selectedHourOffset) }
     useEffect {
         subscribeToWinds { w ->
@@ -114,7 +117,7 @@ val App = FC<Props> {
             div { +(dz?.name ?: "lat=${w.lat}, lon=${w.lon}") }
             div { +"Fetched at:" }
             div { +w.fetchTime }
-            div { +"Forcast valid:" }
+            div { +"Forecast valid:" }
             div { +w.windsAloft.getValidAtString(selectedHourOffset) } }
         br { }
         div {
@@ -122,6 +125,7 @@ val App = FC<Props> {
             Drift {
                 winds = w
                 input = inputState
+                this.nautical = nautical
             }
         }
         hr { }
@@ -137,6 +141,18 @@ val App = FC<Props> {
         }
     }
 
+    div {
+        ReactHTML.input {
+            type = InputType.checkbox
+            key = "nautical"
+            checked = nautical
+            onChange = {
+                nautical = it.target.checked
+                LocalStorage.nautical = it.target.checked
+            }
+        }
+        + "Nautical miles"
+    }
     p {
         small { +"For questions, feedback, or request to add a DZ email boris at mustelinae.net" }
     }
