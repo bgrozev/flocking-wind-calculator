@@ -177,6 +177,20 @@ val InputContainer = FC<InputContainerProps> { props ->
                     )
                 }
             }
+            button {
+                +"CRW"
+                onClick = {
+                    props.onInputChanged(
+                        Input(
+                            props.input.startAltitude,
+                            props.input.endAltitude,
+                            15.0,
+                            27.0,
+                            props.input.jumprunDirection
+                        )
+                    )
+                }
+            }
         }
         div {}
 
