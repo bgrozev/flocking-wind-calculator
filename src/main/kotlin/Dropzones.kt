@@ -45,6 +45,7 @@ val dropzones = listOf(
     Dropzone("Texas Skydiving", 30.417, -96.968),
     Dropzone("Triangle Skydiving Center", 36.026, -78.329),
     Dropzone("West Jump Denmark", 56.551, 9.168),
+    Dropzone("Wisconsin Skydiving Center", 42.962, -88.818),
     Dropzone(Dropzone.CUSTOM_NAME, 0.0, 0.0)
 )
 
