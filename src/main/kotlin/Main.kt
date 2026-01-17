@@ -25,7 +25,7 @@ fun main() {
 suspend fun fetchWinds() {
     getDropzone()?.let {
         console.log("Fetching winds for $it")
-        val w = getWindsAloft(it.first.latitude, it.first.longitude, it.second)
+        val w = getWindsAloftOpenMeteo(it.first.latitude, it.first.longitude, it.second)
         console.log("Fetched winds, setting")
         onWindsChanged(w)
     } ?: run {
@@ -44,14 +44,6 @@ var getDropzone: () -> Pair<Dropzone, Int>? = { null }
 val App = FC<Props> {
     h2 {
         +"Flocking Wind Calculator"
-    }
-    p {
-        className = "poweredby"
-        +"Powered by "
-        a {
-            href = "https://www.markschulze.net/winds/"
-            +"Winds Aloft by Mark Schulze"
-        }
     }
     p {
         className = "poweredby"
