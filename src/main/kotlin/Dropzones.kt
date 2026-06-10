@@ -18,6 +18,7 @@ val dropzones = listOf(
     Dropzone("Jump Georgia Skydiving", 32.650, -81.598),
     Dropzone("Jumptown", 42.568, -72.283),
     Dropzone("Kolding Faldskærmsklub", 55.437, 9.327),
+    Dropzone("Netheravon", 51.245, -1.764),
     Dropzone("Skydive Alabama", 34.267, -86.863),
     Dropzone("Skydive Arizona", 32.805, -111.584),
     Dropzone("Skydive Atlanta", 32.953, -84.262),
