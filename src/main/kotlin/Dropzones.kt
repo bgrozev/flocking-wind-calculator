@@ -100,8 +100,10 @@ val DropzonesComponent = FC<DropzonesProps> { props ->
             }
             defaultValue = LocalStorage.dropzone.name
         }
+        val mapsUrl = "https://www.google.com/maps?q=${props.selected.latitude},${props.selected.longitude}"
         DoubleInputField {
             name = "Latitude:"
+            href = mapsUrl
             className = "inputLatLon"
             value = props.selected.latitude
             onChange = {
@@ -118,6 +120,7 @@ val DropzonesComponent = FC<DropzonesProps> { props ->
         }
         DoubleInputField {
             name = "Longitude:"
+            href = mapsUrl
             className = "inputLatLon"
             value = props.selected.longitude
             onChange = {

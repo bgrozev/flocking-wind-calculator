@@ -8,6 +8,7 @@ import react.dom.html.InputType
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.input
+import react.dom.html.ReactHTML.a
 import react.key
 
 data class Input(
@@ -297,7 +298,16 @@ val InputContainer = FC<InputContainerProps> { props ->
 
     val DoubleInputField = FC<InputFieldProps<Double>> { props ->
     div {
-        +props.name
+        val href = props.href
+        if (href != null) {
+            a {
+                this.href = href
+                target = react.dom.html.AnchorTarget._blank
+                +props.name
+            }
+        } else {
+            +props.name
+        }
     }
     div {
         input {
@@ -320,4 +330,5 @@ external interface InputFieldProps<T> : Props {
     var value: T
     var onChange: (T) -> Unit
     var disabled: Boolean
+    var href: String?
 }
