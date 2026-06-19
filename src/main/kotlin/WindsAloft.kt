@@ -13,7 +13,7 @@ import kotlin.math.round
 
 private const val METERS_TO_FEET = 3.28084
 
-private val openMeteoHPas = listOf(1000, 975, 950, 925, 900, 875, 850, 825, 800, 775, 750, 725, 700, 675, 650, 625, 600)
+private val openMeteoHPas = listOf(1000, 975, 950, 925, 900, 875, 850, 825, 800, 775, 750, 725, 700, 675, 650, 625, 600, 575, 550, 525, 500, 475, 450, 425, 400, 375, 350, 325, 300, 275, 250, 225, 200)
 
 @Serializable
 data class OpenMeteoElevationResponse(
@@ -81,7 +81,55 @@ data class OpenMeteoHourly(
     @SerialName("geopotential_height_625hPa") val geopotential_height_625hPa: List<Double>,
     @SerialName("wind_direction_600hPa") val wind_direction_600hPa: List<Double>,
     @SerialName("wind_speed_600hPa") val wind_speed_600hPa: List<Double>,
-    @SerialName("geopotential_height_600hPa") val geopotential_height_600hPa: List<Double>
+    @SerialName("geopotential_height_600hPa") val geopotential_height_600hPa: List<Double>,
+    @SerialName("wind_direction_575hPa") val wind_direction_575hPa: List<Double>,
+    @SerialName("wind_speed_575hPa") val wind_speed_575hPa: List<Double>,
+    @SerialName("geopotential_height_575hPa") val geopotential_height_575hPa: List<Double>,
+    @SerialName("wind_direction_550hPa") val wind_direction_550hPa: List<Double>,
+    @SerialName("wind_speed_550hPa") val wind_speed_550hPa: List<Double>,
+    @SerialName("geopotential_height_550hPa") val geopotential_height_550hPa: List<Double>,
+    @SerialName("wind_direction_525hPa") val wind_direction_525hPa: List<Double>,
+    @SerialName("wind_speed_525hPa") val wind_speed_525hPa: List<Double>,
+    @SerialName("geopotential_height_525hPa") val geopotential_height_525hPa: List<Double>,
+    @SerialName("wind_direction_500hPa") val wind_direction_500hPa: List<Double>,
+    @SerialName("wind_speed_500hPa") val wind_speed_500hPa: List<Double>,
+    @SerialName("geopotential_height_500hPa") val geopotential_height_500hPa: List<Double>,
+    @SerialName("wind_direction_475hPa") val wind_direction_475hPa: List<Double>,
+    @SerialName("wind_speed_475hPa") val wind_speed_475hPa: List<Double>,
+    @SerialName("geopotential_height_475hPa") val geopotential_height_475hPa: List<Double>,
+    @SerialName("wind_direction_450hPa") val wind_direction_450hPa: List<Double>,
+    @SerialName("wind_speed_450hPa") val wind_speed_450hPa: List<Double>,
+    @SerialName("geopotential_height_450hPa") val geopotential_height_450hPa: List<Double>,
+    @SerialName("wind_direction_425hPa") val wind_direction_425hPa: List<Double>,
+    @SerialName("wind_speed_425hPa") val wind_speed_425hPa: List<Double>,
+    @SerialName("geopotential_height_425hPa") val geopotential_height_425hPa: List<Double>,
+    @SerialName("wind_direction_400hPa") val wind_direction_400hPa: List<Double>,
+    @SerialName("wind_speed_400hPa") val wind_speed_400hPa: List<Double>,
+    @SerialName("geopotential_height_400hPa") val geopotential_height_400hPa: List<Double>,
+    @SerialName("wind_direction_375hPa") val wind_direction_375hPa: List<Double>,
+    @SerialName("wind_speed_375hPa") val wind_speed_375hPa: List<Double>,
+    @SerialName("geopotential_height_375hPa") val geopotential_height_375hPa: List<Double>,
+    @SerialName("wind_direction_350hPa") val wind_direction_350hPa: List<Double>,
+    @SerialName("wind_speed_350hPa") val wind_speed_350hPa: List<Double>,
+    @SerialName("geopotential_height_350hPa") val geopotential_height_350hPa: List<Double>,
+    @SerialName("wind_direction_325hPa") val wind_direction_325hPa: List<Double>,
+    @SerialName("wind_speed_325hPa") val wind_speed_325hPa: List<Double>,
+    @SerialName("geopotential_height_325hPa") val geopotential_height_325hPa: List<Double>,
+    @SerialName("wind_direction_300hPa") val wind_direction_300hPa: List<Double>,
+    @SerialName("wind_speed_300hPa") val wind_speed_300hPa: List<Double>,
+    @SerialName("geopotential_height_300hPa") val geopotential_height_300hPa: List<Double>,
+    @SerialName("wind_direction_275hPa") val wind_direction_275hPa: List<Double>,
+    @SerialName("wind_speed_275hPa") val wind_speed_275hPa: List<Double>,
+    @SerialName("geopotential_height_275hPa") val geopotential_height_275hPa: List<Double>,
+    @SerialName("wind_direction_250hPa") val wind_direction_250hPa: List<Double>,
+    @SerialName("wind_speed_250hPa") val wind_speed_250hPa: List<Double>,
+    @SerialName("geopotential_height_250hPa") val geopotential_height_250hPa: List<Double>,
+    @SerialName("wind_direction_225hPa") val wind_direction_225hPa: List<Double>,
+    @SerialName("wind_speed_225hPa") val wind_speed_225hPa: List<Double>,
+    @SerialName("geopotential_height_225hPa") val geopotential_height_225hPa: List<Double>,
+    @SerialName("wind_direction_200hPa") val wind_direction_200hPa: List<Double>,
+    @SerialName("wind_speed_200hPa") val wind_speed_200hPa: List<Double>,
+    @SerialName("geopotential_height_200hPa") val geopotential_height_200hPa: List<Double>
 )
 
 data class Winds(
@@ -197,6 +245,22 @@ suspend fun getWindsAloftOpenMeteo(lat: Double, lon: Double, hourOffset: Int): W
     addPressureLevelWind(gfs.hourly.geopotential_height_650hPa[hourIndex], gfs.hourly.wind_direction_650hPa[hourIndex], gfs.hourly.wind_speed_650hPa[hourIndex])
     addPressureLevelWind(gfs.hourly.geopotential_height_625hPa[hourIndex], gfs.hourly.wind_direction_625hPa[hourIndex], gfs.hourly.wind_speed_625hPa[hourIndex])
     addPressureLevelWind(gfs.hourly.geopotential_height_600hPa[hourIndex], gfs.hourly.wind_direction_600hPa[hourIndex], gfs.hourly.wind_speed_600hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_575hPa[hourIndex], gfs.hourly.wind_direction_575hPa[hourIndex], gfs.hourly.wind_speed_575hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_550hPa[hourIndex], gfs.hourly.wind_direction_550hPa[hourIndex], gfs.hourly.wind_speed_550hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_525hPa[hourIndex], gfs.hourly.wind_direction_525hPa[hourIndex], gfs.hourly.wind_speed_525hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_500hPa[hourIndex], gfs.hourly.wind_direction_500hPa[hourIndex], gfs.hourly.wind_speed_500hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_475hPa[hourIndex], gfs.hourly.wind_direction_475hPa[hourIndex], gfs.hourly.wind_speed_475hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_450hPa[hourIndex], gfs.hourly.wind_direction_450hPa[hourIndex], gfs.hourly.wind_speed_450hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_425hPa[hourIndex], gfs.hourly.wind_direction_425hPa[hourIndex], gfs.hourly.wind_speed_425hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_400hPa[hourIndex], gfs.hourly.wind_direction_400hPa[hourIndex], gfs.hourly.wind_speed_400hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_375hPa[hourIndex], gfs.hourly.wind_direction_375hPa[hourIndex], gfs.hourly.wind_speed_375hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_350hPa[hourIndex], gfs.hourly.wind_direction_350hPa[hourIndex], gfs.hourly.wind_speed_350hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_325hPa[hourIndex], gfs.hourly.wind_direction_325hPa[hourIndex], gfs.hourly.wind_speed_325hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_300hPa[hourIndex], gfs.hourly.wind_direction_300hPa[hourIndex], gfs.hourly.wind_speed_300hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_275hPa[hourIndex], gfs.hourly.wind_direction_275hPa[hourIndex], gfs.hourly.wind_speed_275hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_250hPa[hourIndex], gfs.hourly.wind_direction_250hPa[hourIndex], gfs.hourly.wind_speed_250hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_225hPa[hourIndex], gfs.hourly.wind_direction_225hPa[hourIndex], gfs.hourly.wind_speed_225hPa[hourIndex])
+    addPressureLevelWind(gfs.hourly.geopotential_height_200hPa[hourIndex], gfs.hourly.wind_direction_200hPa[hourIndex], gfs.hourly.wind_speed_200hPa[hourIndex])
 
     // Sort by altitude
     val sortedPoints = rawPoints.sortedBy { it.altFt }
@@ -206,7 +270,11 @@ suspend fun getWindsAloftOpenMeteo(lat: Double, lon: Double, hourOffset: Int): W
     val directionMap = mutableMapOf<String, Int>()
     val speedMap = mutableMapOf<String, Int>()
 
+    // Highest altitude we actually have data for; above this we can't interpolate, only clamp.
+    val maxDataAltFt = sortedPoints.lastOrNull()?.altFt ?: 0.0
+
     for (targetAlt in altFtList) {
+        if (targetAlt > maxDataAltFt) continue // No data this high: leave out of map -> UI shows n/a
         val (interpDir, interpSpeed) = interpolateWind(sortedPoints, targetAlt.toDouble())
         directionMap[targetAlt.toString()] = interpDir.toInt()
         speedMap[targetAlt.toString()] = interpSpeed.toInt()

@@ -28,9 +28,11 @@ val WindsContainer = FC<WindsProps> { props ->
             (0..40).forEach {
                 tr {
                     val altitude = props.winds.windsAloft.altFt[it].toString()
+                    val speed = props.winds.windsAloft.speed[altitude]
+                    val direction = props.winds.windsAloft.direction[altitude]
                     th { +altitude }
-                    th { + "${props.winds.windsAloft.speed[altitude]}" }
-                    th { + "${props.winds.windsAloft.direction[altitude]}" }
+                    th { + (speed?.toString() ?: "n/a") }
+                    th { + (direction?.toString() ?: "n/a") }
                 }
             }
         }
