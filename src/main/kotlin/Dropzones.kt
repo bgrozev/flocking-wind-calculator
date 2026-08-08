@@ -50,6 +50,7 @@ val dropzones = listOf(
     Dropzone("Skydive Spaceland Houston", 29.357, -95.459),
     Dropzone("Skydive Spaceland San Marcos", 29.768, -97.775),
     Dropzone("Skydive Spain", 37.296,-6.162),
+    Dropzone("Skydive Stockholm", 60.286, 17.429),
     Dropzone("Skydive Suffolk", 36.679,-76.610),
     Dropzone("Skydive Tennessee", 35.381, -86.240),
     Dropzone("Skydive Teuge", 52.246, 6.047),
