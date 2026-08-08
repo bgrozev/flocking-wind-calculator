@@ -4,3 +4,4 @@
 /build/js/packages/confexplorer/kotlin/
 **.swp
 .claude/settings.local.json
+.claude
