@@ -46,11 +46,10 @@ val App = FC<Props> {
         +"Flocking Wind Calculator"
     }
     p {
-        className = "poweredby"
-        +"See also: "
+        className = "flipBanner"
         a {
-            href = "https://flip.mustelinae.net"
-            +"FliP Flight Planner"
+            href = "https://flip.mustelinae.net/?flocking"
+            +"Check out FliP, the next-gen flocking planner."
         }
     }
 

@@ -7,9 +7,15 @@ h2 {
   margin-bottom: 0;
 }
 
-.poweredby {
-  font-size: 70%;
+.flipBanner {
   margin-top: 0;
+  font-size: 120%;
+  font-weight: bold;
+}
+
+.flipBanner a,
+.flipBanner a:visited {
+  color: #0000EE;
 }
 
 .inputNumber {
